@@ -26,7 +26,9 @@ if ($total_func > 0) {
         echo "<script language='javascript'>window.location='painel-adm'</script>";
     } else if ($nome_cargo == 'Caixa') {
         echo "<script language='javascript'>window.location='painel-caixa'</script>";
-    } else {
+    } else if ($nome_cargo == 'Cliente') {
+        echo "<script language='javascript'>window.location='painel-cliente'</script>";
+    }  else {
         echo "<script language='javascript'> window.alert ('Você não tem autorização  de acesso ao sistema, fale com o Administrador!')</script>";
         echo "<script language='javascript'> window.location='index.php' </script>";
     }
