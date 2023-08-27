@@ -1,7 +1,3 @@
----
-permalink: /index.php
----
-
 # SISTEMA DE GESTÃO PARA COMÉRCIOS COM VENDA EM BALCÃO (PDV - PONTO DE VENDA)
 
 Projeto criado para atender o nicho de Comércios com vendas de todo tipo em balcão. Mercados, Padarias, Lanchonetes, Quitandas. Com o propósito de atender, vender e fornecer aos clientes desse tipo de negócios com maestria e boas funcionalidades, gestão de estoque, controle total do fluxo de caixa, aviso de necessidade de compras, sangria com configuração de tempo e quantia, relatórios configuráveis por data.
