@@ -1,6 +1,6 @@
 <?php 
 @session_start();
-$id_cargo = $_SESSION['id_cargo_usuario'];
+$id_cargo = @$_SESSION['id_cargo_usuario'];
 
 $query = $pdo->query("SELECT * FROM cargos WHERE id = '$id_cargo'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);

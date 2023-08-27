@@ -6,8 +6,6 @@ Projeto criado para atender o nicho de Comércios com vendas de todo tipo em bal
 
 - Sistema com login para painéis de usuários de acordo com o cargo dentro do negócio;
 - Relatórios de todos os controles necessários;
-- Tela de chamados para a cozinha iniciar o preparo do pedido;
-- Pedidos feitos remotamente para entrega ou retirada no balcão, ou pedidos feitos na mesa vão direto para a cozinha.
 
 ## Tecnologias utilizadas
 
