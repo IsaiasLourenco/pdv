@@ -54,7 +54,7 @@ if ($total_reg_adm == 0) {
                             <h3 class="text-center text-dark">Login</h3>
                             <div class="form-group">
                                 <label for="username" class="text-dark">Usuário:</label><br>
-                                <input type="text" name="email" id="username" class="form-control" placeholder="Insira seu Email" required>
+                                <input autofocus type="text" name="email" id="username" class="form-control" placeholder="Insira seu Email" required>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-dark">Senha:</label><br>
@@ -78,7 +78,7 @@ if ($total_reg_adm == 0) {
 </html>
 
 <!-- Modal Cadastro Cliente -->
-<div class="modal" id="modal-cadastrar" tabindex="-1">
+<div class="modal fade" id="modal-cadastrar" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -92,13 +92,13 @@ if ($total_reg_adm == 0) {
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Nome</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" name="nomeCad" aria-describedby="emailHelp" required="">
+                        <input type="text" class="form-control" id="exampleInputNome" name="nomeCad" aria-describedby="emailHelp" required="">
 
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email </label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" name="emailCad" aria-describedby="emailHelp" required="">
+                        <input type="email" class="form-control" id="exampleInputEmail" name="emailCad" aria-describedby="emailHelp" required="">
 
                     </div>
 
@@ -122,7 +122,7 @@ if ($total_reg_adm == 0) {
 <!-- Ajax Cadastro Cliente -->
 <?php
 if (isset($_POST['btn-cadastrar'])) {
-
+    $hoje = date('Y-m-d');
     $email_novo = $_POST['emailCad'];
 
     //BUSCAR O REGISTRO JÁ CADASTRADO NO BANCO
@@ -137,18 +137,19 @@ if (isset($_POST['btn-cadastrar'])) {
 
     $queryCargo = $pdo->query("SELECT * FROM cargos WHERE nome = 'Cliente' ");
     $resCargo = $queryCargo->fetchAll(PDO::FETCH_ASSOC);
-    $id_cargo = $resCargo[0]['id'];
     $total_reg_cli = @count($resCargo);
     if ($total_reg_cli == 0) {
+
         //INSERIR OS CARGOS NECESSÁRIOS PARA A VALIDAÇÃO NA TABELA CARGOS
-        $pdo->prepare("INSERT INTO cargos SET nome = 'Cliente'");
+        $pdo->query("INSERT INTO cargos SET nome = 'Cliente'");
         $id_cargoNovoCli = $pdo->lastInsertId();
 
-        $query = $pdo->prepare("INSERT INTO funcionarios (nome, email, senha, cargo) VALUES (:nome, :email, :senha, :cargo)");
+        $query = $pdo->prepare("INSERT INTO funcionarios (nome, email, senha, cargo, datacad) VALUES (:nome, :email, :senha, :cargo, :datacad)");
         $query->bindValue(":nome", $_POST['nomeCad']);
         $query->bindValue(":email", $_POST['emailCad']);
         $query->bindValue(":senha", $_POST['senhaCad']);
         $query->bindValue(":cargo", $id_cargoNovoCli);
+        $query->bindValue(":datacad", $hoje);
         $query->execute();
         $id_NovoFunc = $pdo->lastInsertId();
         $comentario = 'Alguma coisa a ser editada depois!!';
@@ -157,15 +158,17 @@ if (isset($_POST['btn-cadastrar'])) {
         $queryCli->bindValue(":funcionario", $id_NovoFunc);
         $queryCli->bindValue(":comentario", $comentario);
         $queryCli->execute();
-        echo "<script language='javascript'>window.alert('Cadastrado com Sucesso')</script>";
+
+        echo "<script language='javascript'>window.alert('Cadastrado com Sucess!!')</script>";
         echo "<script language='javascript'>window.location='index.php'</script>";
         exit();
     }
-
-    $query = $pdo->prepare("INSERT INTO funcionarios (nome, email, senha, cargo) VALUES (:nome, :email, :senha, :cargo)");
+    $id_cargo = $resCargo[0]['id'];
+    $query = $pdo->prepare("INSERT INTO funcionarios (nome, email, senha, cargo, datacad) VALUES (:nome, :email, :senha, :cargo, :datacad)");
     $query->bindValue(":nome", $_POST['nomeCad']);
     $query->bindValue(":email", $_POST['emailCad']);
     $query->bindValue(":senha", $_POST['senhaCad']);
+    $query->bindValue(":datacad", $hoje);
     $query->bindValue(":cargo", $id_cargo);
     $query->execute();
     $id_NovoFunc = $pdo->lastInsertId();
@@ -175,9 +178,16 @@ if (isset($_POST['btn-cadastrar'])) {
     $queryCli->bindValue(":comentario", $comentario);
     $queryCli->execute();
 
-    echo "<script language='javascript'>window.alert('Cadastrado com Sucesso')</script>";
-    echo "<scri1pt language='javascript'>window.location='index.php'</scri1pt>";
+    echo "<script language='javascript'>window.alert('Cadastrado com Sucesso!!')</script>";
     exit();
 }
 ?>
 <!-- Fim Ajax Cadastro Cliente -->
+
+<!-- FOCO NO NOME ABRINDO A MODAL CADASTRO -->
+<script>
+    $('#modal-cadastrar').on('shown.bs.modal', function(event) {
+        $("#nomeCad").focus();
+    })
+</script>
+<!-- FIM FOCO NO NOME ABRINDO A MODAL CADASTRO -->
