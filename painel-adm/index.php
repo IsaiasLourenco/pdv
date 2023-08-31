@@ -1,9 +1,17 @@
 <?php
-require_once("../../conexao.php");
+require_once("../conexao.php");
 require_once("verificar.php");
 @session_start();
+$id_usu = $_SESSION['id_usuario'];
 $id_cargo = $_SESSION['id_cargo_usuario'];
-// VERIFICAR USUÁRIO LOGADO
+@$funcao = $_GET['funcao'];
+
+// VERIFICAR ID DO USUÁRIO LOGADO
+$query1 = $pdo->query("SELECT * FROM funcionarios WHERE id = '$id_usu' ");
+$res1 = $query1->fetchAll(PDO::FETCH_ASSOC);
+$nome_usu = $res1[0]['nome'];
+
+// VERIFICAR CARGO DO USUÁRIO LOGADO
 $query = $pdo->query("SELECT * FROM cargos WHERE id = '$id_cargo'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $nome_cargo = $res[0]['nome'];
@@ -15,25 +23,29 @@ if ($nome_cargo != 'Administrador') {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br,
+">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAINEL ADMINISTRATIVO - <?php echo $nome_sistema ?></title>
-    <link rel="shortcut icon" href="../../assets/imagens/logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/imagens/logo.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="../../assets/css/fontawesome.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../assets/css/fontesEtitulos.css">
+    <link rel="stylesheet" href="../assets/css/fontesEtitulos.css">
 
-    <script src="../../assets/js/buscaCep.js" type="module" defer></script>
+    <script src="../assets/js/buscaCep.js" type="module" defer></script>
+
+    <link rel="stylesheet" href="../assets/DataTables/datatables.min.css">
+    <script src="../assets/DataTables/datatables.min.js"></script>
 
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <img class="img-profile rounded-circle mt-1 mr-2" src="../../assets/imagens/funcionarios/eu-II jpeg.jpg" width="40px" height="40px">
+
         <a class="navbar-brand" href="index.php"><i class="fa-solid fa-people-roof"></i> Administrador</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
             <span class="navbar-toggler-icon"></span>
@@ -42,28 +54,32 @@ if ($nome_cargo != 'Administrador') {
         <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.php"><i class="fa-solid fa-house-chimney"></i> Home <span class="sr-only">(página atual)</span></a>
+                    <a class="nav-link" href="index.php"><i class="fa-solid fa-house-chimney"></i> Home <span class="sr-only"></span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa-solid fa-money-bill-transfer"></i> Movimentações</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa-solid fa-user-check"></i> <?php echo $_SESSION['nome_usuario'] ?>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#"><i class="fa-solid fa-user-pen"></i> Editar Perfil</a>
-
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
-                    </div>
+                    <a class="nav-link" href="#"><i class="fa-solid fa-users"></i> Usuários</a>
                 </li>
 
             </ul>
             <form method="get" class="form-inline my-2 my-lg-0">
-                <input autofocus class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar" name="txtPesquisar">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Pesquisar <i class="fa-solid fa-magnifying-glass"></i></button>
+                
+                <ul>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                            <i class="fa-solid fa-address-card"></i> <?php echo $nome_usu ?>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="../logout.php"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+                        </div>
+                    </li>   
+                </ul>
+
+                <img class="img-profile rounded-circle mt-1 mr-2" src="../assets/imagens/funcionarios/eu-II jpeg.jpg" width="40px" height="40px">
+
             </form>
         </div>
 
@@ -166,7 +182,7 @@ if ($nome_cargo != 'Administrador') {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
     <!-- Mascaras JS -->
-    <script type="text/javascript" src="../../assets/js/mascaras.js"></script>
+    <script type="text/javascript" src="../assets/js/mascaras.js"></script>
 
     <!-- Ajax para funcionar Mascaras JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
@@ -322,19 +338,19 @@ if ($nome_cargo != 'Administrador') {
 
                         <div class="form-group">
                             <label>Imagem</label>
-                            <input type="file" value="<?php echo @$imagem ?>" class="form-control-file" id="imagem" name="imagem" onChange="carregarImg();">
+                            <input type="file" value="<?php echo @$resEd[0]['imagem'] ?>" class="form-control-file" id="imagem" name="imagem" onChange="carregarImg();">
                         </div>
 
                         <div id="divImgConta" class="mt-4">
-                            <?php if (@$imagem != "") { ?>
-                                <img src="../../assets/imagens/fucionarios/<?php echo @$imagem ?>" width="170px" id="target">
+                            <?php if (@$resEd[0]['imagem'] != "") { ?>
+                                <img src="../assets/imagens/fucionarios/<?php echo @$resEd[0]['imagem'] ?>" width="170px" id="target">
                             <?php  } else { ?>
-                                <img src="../../assets/imagens/funcionarios/sem-foto.jpg" width="170px" id="target" alt="Foto Funcionario">
+                                <img src="../assets/imagens/funcionarios/sem-foto.jpg" width="170px" id="target" alt="Foto Funcionario">
 
                             <?php } ?>
                         </div>
 
-                        <input type="hidden" name="id" value="<?php echo @$id ?>">
+                        <input type="text" name="id" value="<?php echo @$id ?>">
 
                         <small>
                             <div align="center" id="mensagem">
@@ -446,9 +462,11 @@ if ($nome_cargo != 'Administrador') {
 
 <!-- CHAMA MODAL NOVO -->
 <?php
-if ($_GET['funcao'] == 'novo') { ?>
+if ($funcao == 'novo') { ?>
     <script>
-        var myModal = new bootstrap.Modal(document.getElementById('novoFuncionario'));
+        var myModal = new bootstrap.Modal(document.getElementById('novoFuncionario'));{
+            backdrop: 'static'
+        }
         myModal.show();
     </script>
 <?php }
@@ -500,7 +518,7 @@ if (isset($_POST['btn-cadastrar'])) {
 
 <!-- CHAMA MODAL EDITAR -->
 <?php
-if ($_GET['funcao'] == 'editar') { ?>
+if ($funcao == 'editar') { ?>
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('novoFuncionario'));
         myModal.show();
@@ -559,7 +577,7 @@ if (isset($_POST['btn-editar'])) {
 
 <!-- CHAMA MODAL ECLUIR -->
 <?php
-if ($_GET['funcao'] == 'excluir') { ?>
+if ($funcao == 'excluir') { ?>
     <script>
         var myModal = new bootstrap.Modal(document.getElementById('excluir'));
         myModal.show();
@@ -597,7 +615,7 @@ if (isset($_POST['btn-excluir'])) {
         $('#cidade_registro').text(cidade);
         $('#estado_registro').text(estado);
         $('#senha_registro').text(senha);
-        $('#imagem_registro').attr('src', '../../assets/imagens/funcionarios/' + imagem);
+        $('#imagem_registro').attr('src', '../assets/imagens/funcionarios/' + imagem);
         $('#data_nasc_registro').text(datanasc);
 
     }

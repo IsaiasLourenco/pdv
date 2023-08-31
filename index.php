@@ -1,5 +1,5 @@
 <?php
-require_once("../conexao.php");
+require_once("conexao.php");
 
 $queryAdm = $pdo->query("SELECT * FROM cargos WHERE nome = 'Administrador' ");
 $resAdm = $queryAdm->fetchAll(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ if ($total_reg_adm == 0) {
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
-    <link rel="shortcut icon" href="../assets/imagens/logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/imagens/logo.ico" type="image/x-icon">
 
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
@@ -38,13 +38,15 @@ if ($total_reg_adm == 0) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="../assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/index.css">
 </head>
 
 <body>
+
+
     <div id="login">
-        <a href="../index.php" title="Voltar para a Home..">
-            <h3 class="text-center text-white pt-5"><img class="logoIndex" src="../assets/imagens/logo.png" alt="Logo"></h3>
+        <a href="index.html" title="Voltar para a Home..">
+            <h3 class="text-center text-white pt-5"><img class="logoIndex" src="assets/imagens/logo.png" alt="Logo"></h3>
         </a>
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
@@ -91,19 +93,18 @@ if ($total_reg_adm == 0) {
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nome</label>
+                        <label for="exampleInputNome">Nome</label>
                         <input type="text" class="form-control" id="exampleInputNome" name="nomeCad" aria-describedby="emailHelp" required="">
 
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email </label>
+                        <label for="exampleInputEmail">Email </label>
                         <input type="email" class="form-control" id="exampleInputEmail" name="emailCad" aria-describedby="emailHelp" required="">
-
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Senha</label>
+                        <label for="exampleInputPass">Senha</label>
                         <input type="text" class="form-control" name="senhaCad" id="exampleInputPassword1" required="">
                     </div>
 
@@ -121,6 +122,7 @@ if ($total_reg_adm == 0) {
 
 <!-- Ajax Cadastro Cliente -->
 <?php
+
 if (isset($_POST['btn-cadastrar'])) {
     $hoje = date('Y-m-d');
     $email_novo = $_POST['emailCad'];

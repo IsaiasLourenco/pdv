@@ -1,5 +1,5 @@
 <?php
-require_once("../conexao.php");
+require_once("conexao.php");
 @session_start();
 
 $email = $_POST['email'];
@@ -16,6 +16,7 @@ if ($total_func > 0) {
 
     $_SESSION['nome_usuario'] = $res[0]['nome'];
     $_SESSION['id_cargo_usuario'] = $res[0]['cargo'];
+    $_SESSION['id_usuario'] = $res[0]['id'];
     $id_cargo = $res[0]['cargo'];
 
     $query = $pdo->query("SELECT * FROM cargos WHERE id = '$id_cargo'");

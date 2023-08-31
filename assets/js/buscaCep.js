@@ -28,16 +28,13 @@ const pesquisarCEP = async () => {
         if (endereco.hasOwnProperty('erro')) {
             window.alert('CEP Inexistente!');
             limparCampos(endereco);
-            cep.focus();
-
         } else {
             preencherForm(endereco);
-            numero.focus();
         }
     } else {
+        
         window.alert('CEP Incorreto!');
-        limparCampos(endereco);
-        cep.focus();
+        limparCampos();
     }
 }
 
