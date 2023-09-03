@@ -2,23 +2,22 @@
 require_once("conexao.php");
 @session_start();
 
-$email = $_POST['email'];
+$usuario = $_POST['usuario'];
 $senha = $_POST['senha'];
 
-$query = $pdo->prepare("SELECT * FROM funcionarios WHERE email = :email AND senha = :senha");
-$query->bindValue(":email", "$email");
-$query->bindValue(":senha", "$senha");
-$query->execute();
-$res = $query->fetchAll(PDO::FETCH_ASSOC);
-$total_func = @count($res);
-
+$query_con = $pdo->prepare("SELECT * FROM funcionarios WHERE (email = :usuario OR cpf = :usuario) AND senha = :senha");
+$query_con->bindValue(":usuario", "$usuario");
+$query_con->bindValue(":senha", "$senha");
+$query_con->execute();
+$res_con = $query_con->fetchAll(PDO::FETCH_ASSOC);
+$total_func = @count($res_con);
 if ($total_func > 0) {
-
-    $_SESSION['nome_usuario'] = $res[0]['nome'];
-    $_SESSION['id_cargo_usuario'] = $res[0]['cargo'];
-    $_SESSION['id_usuario'] = $res[0]['id'];
-    $id_cargo = $res[0]['cargo'];
-
+    $id_cargo = $res_con[0]['cargo'];
+    $_SESSION['nome_usuario'] = $res_con[0]['nome'];
+    $_SESSION['id_cargo_usuario'] = $res_con[0]['cargo'];
+    $_SESSION['cpf_usuario'] = $res_con[0]['cpf'];
+    $_SESSION['id_usuario'] = $res_con[0]['id'];
+    
     $query = $pdo->query("SELECT * FROM cargos WHERE id = '$id_cargo'");
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
     $nome_cargo = $res[0]['nome'];
@@ -37,3 +36,4 @@ if ($total_func > 0) {
     echo "<script language='javascript'> window.alert ('Dados incorretos!')</script>";
     echo "<script language='javascript'> window.location='index.php' </script>";
 }
+	

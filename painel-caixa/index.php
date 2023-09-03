@@ -1,5 +1,5 @@
 <?php 
-require_once("../../conexao.php");
+require_once("../conexao.php");
 require_once("verificar.php");
 @session_start();
 // VERIFICAR USUÁRIO LOGADO

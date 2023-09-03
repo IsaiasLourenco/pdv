@@ -20,7 +20,7 @@ if ($total_reg_adm == 0) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -30,11 +30,9 @@ if ($total_reg_adm == 0) {
 
     <link rel="shortcut icon" href="assets/imagens/logo.ico" type="image/x-icon">
 
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
@@ -45,22 +43,22 @@ if ($total_reg_adm == 0) {
 
 
     <div id="login">
-        <a href="index.html" title="Voltar para a Home..">
+        <a href="index.php" title="Voltar para Login..">
             <h3 class="text-center text-white pt-5"><img class="logoIndex" src="assets/imagens/logo.png" alt="Logo"></h3>
         </a>
         <div class="container">
             <div id="login-row" class="row justify-content-center align-items-center">
                 <div id="login-column" class="col-md-6">
                     <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="autenticar.php" method="post">
+                        <form id="form-login" action="autenticar.php" method="post">
                             <h3 class="text-center text-dark">Login</h3>
                             <div class="form-group">
-                                <label for="username" class="text-dark">Usuário:</label><br>
-                                <input autofocus type="text" name="email" id="username" class="form-control" placeholder="Insira seu Email" required>
+                                <label for="usuario" class="text-dark">Usuário:</label>
+                                <input autofocus type="text" name="usuario" id="usuario" class="form-control" placeholder="Insira seu Email" required>
                             </div>
                             <div class="form-group">
-                                <label for="password" class="text-dark">Senha:</label><br>
-                                <input type="password" name="senha" id="password" class="form-control" placeholder="Insira sua Senha" required>
+                                <label for="senha" class="text-dark">Senha:</label><br>
+                                <input type="password" name="senha" id="senha" class="form-control" placeholder="Insira sua Senha" required>
                             </div>
                             <div class="form-group">
 
@@ -93,19 +91,19 @@ if ($total_reg_adm == 0) {
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="exampleInputNome">Nome</label>
-                        <input type="text" class="form-control" id="exampleInputNome" name="nomeCad" aria-describedby="emailHelp" required="">
+                        <label for="nome">Nome</label>
+                        <input autofocus type="text" class="form-control" id="nome" name="nomeCad" aria-describedby="emailHelp" required>
 
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail">Email </label>
-                        <input type="email" class="form-control" id="exampleInputEmail" name="emailCad" aria-describedby="emailHelp" required="">
+                        <label for="email">Email </label>
+                        <input type="email" autocomplete="off" class="form-control" id="email" name="emailCad" aria-describedby="email" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputPass">Senha</label>
-                        <input type="text" class="form-control" name="senhaCad" id="exampleInputPassword1" required="">
+                        <label for="senha">Senha</label>
+                        <input type="text" class="form-control" name="senhaCad" id="senha" required="">
                     </div>
 
                 </div>
