@@ -1,6 +1,5 @@
 <?php
-require_once("../../../conexao.php");
-require_once("../../painel-adm/verificar.php");
+require_once("../../conexao.php");
 
 $nome = $_POST['nome'];
 $cnpj = $_POST['cnpj'];
@@ -13,7 +12,7 @@ $bairro = $_POST['bairro'];
 $cidade = $_POST['cidade'];
 $estado = $_POST['estado'];
 $categoria = $_POST['categoria'];
-$id = $_POST['id'];
+@$id = $_POST['id'];
 
 //BUSCAR O REGISTRO JÁ CADASTRADO NO BANCO
 $query = $pdo->query("SELECT * FROM fornecedores WHERE  id = '$id'");

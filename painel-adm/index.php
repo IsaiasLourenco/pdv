@@ -20,6 +20,7 @@ $menu2 = 'usuarios';
 $menu3 = 'fornecedores';
 $menu4 = 'cargos';
 $menu5 = 'categorias';
+$menu6 = 'pprodutos';
 
 ?>
 
@@ -68,7 +69,7 @@ $menu5 = 'categorias';
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="index.php?pagina=<?php echo $menu5 ?>"><i class="bi bi-table"></i> Categorias</a>
-                        <a class="dropdown-item" href="index.php?pagina=<?php echo $menu3 ?>"><i class="bi bi-person-fill-add"></i> Fornecedores</a>
+                        <a class="dropdown-item" href="index.php?pagina=<?php echo $menu3 ?>"><i class="fa-solid fa-cart-shopping"></i> Produtos</a>
 
                     </div>
                 </li>
@@ -120,13 +121,14 @@ $menu5 = 'categorias';
         ?>
     </div>
 
-    <script src="../assets/js/buscaCep.js"></script>
-
-    <!-- Mascaras JS -->
-    <script type="text/javascript" src="../assets/js/mascaras.js"></script>
-
     <!-- Ajax para funcionar Mascaras JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    
+    <!-- Mascaras JS -->
+    <script src="../assets/js/mascaras.js"></script>
+
+    <!-- BUSCA CEP -->
+    <script src="../assets/js/buscaCep.js"></script>
 
     <link rel="stylesheet" href="../assets/DataTabels/datatables.min.css">
 

@@ -15,12 +15,12 @@ $pagina = 'categorias';
 </head>
 
 <body>
-    <h6>?php echo $menu5 ?>"><i class="bi bi-table"></i> CATEGORIAS</h2>
-    <a href="index.php?pag=<?php echo $pagina ?>&funcao=novo" type="button" class="btn btn-primary">Nova Categoria</a>
+    <h6><i class="bi bi-table"></i> CATEGORIAS</h2>
+    <a href="index.php?pag=<?php echo $pagina ?>&funcao=novo" type="button" class="btn btn-primary mb-3">Nova Categoria</a>
 
     <small>
-        <table id="example" class="table table-hover table-sm my-4" style="width:98%;">
-            <thead>
+        <table id="categorias" class="table table-hover table-sm my-4" style="width:98%;">
+            <thead class="thead-dark">
                 <tr>
                     <th>Nome</th>
                     <th style="text-align:center">Ações</th>
@@ -272,3 +272,15 @@ if (@$_GET['funcao'] == 'excluir') { ?>
 
     });
 </script>
+
+<!-- SCRIPT PARA DATABLES USUARIOS -->
+<script>
+    $(document).ready(function() {
+        var table = $('#categorias').DataTable({
+            ordering: false
+        });
+
+
+    });
+</script>
+<!-- FIM DO SCRIPT PARA DATABLES USUARIOS -->

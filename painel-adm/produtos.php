@@ -1,6 +1,7 @@
 <?php
+
 $pagina = 'produtos';
-require_once("verificar.php");
+
 ?>
 
 <!DOCTYPE html>

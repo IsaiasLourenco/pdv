@@ -1,5 +1,5 @@
 <?php
-$pag = 'usuarios';
+$pag = 'fornecedores';
 @session_start();
 
 require_once('../conexao.php');
@@ -24,7 +24,7 @@ require_once('../conexao.php');
 
     <div class="mt-4" style="margin-right:25px">
         <?php
-        $query = $pdo->query("SELECT * from funcionarios order by id desc");
+        $query = $pdo->query("SELECT * from fornecedores order by id desc");
         $res = $query->fetchAll(PDO::FETCH_ASSOC);
         $total_reg = @count($res);
 
@@ -33,14 +33,14 @@ require_once('../conexao.php');
 
         ?>
             <small>
-                <table id="usuarios" class="table table-hover" style="width:100%">
+                <table id="fornecedores" class="table table-hover" style="width:100%">
                     <thead class="thead-dark">
                         <tr>
                             <th>Nome</th>
-                            <th>CPF</th>
+                            <th>CNPJ</th>
                             <th>Email</th>
-                            <th style="text-align:center">Senha</th>
-                            <th>Cargo</th>
+                            <th>Telefone</th>
+                            <th>Categoria</th>
                             <th style="text-align: center;">Ações</th>
                         </tr>
                     </thead>
@@ -52,21 +52,21 @@ require_once('../conexao.php');
                             foreach ($res[$i] as $key => $value) {
                             }
 
-                            @$id_car = $res[$i]['cargo'];
+                            @$id_cat = $res[$i]['categoria'];
 
-                            $query1 = $pdo->query("SELECT * FROM cargos WHERE id = '$id_car'");
+                            $query1 = $pdo->query("SELECT * FROM categorias WHERE id = '$id_cat'");
                             $res1 = $query1->fetchAll(PDO::FETCH_ASSOC);
-                            @$nome_car = $res1[0]['nome'];
+                            @$nome_cat = $res1[0]['nome'];
 
 
                         ?>
 
                             <tr>
                                 <td><?php echo $res[$i]['nome'] ?></td>
-                                <td><?php echo $res[$i]['cpf'] ?></td>
+                                <td><?php echo $res[$i]['cnpj'] ?></td>
                                 <td><?php echo $res[$i]['email'] ?></td>
-                                <td style="text-align:center"><?php echo $res[$i]['senha'] ?></td>
-                                <td><?php echo $nome_car ?></td>
+                                <td><?php echo $res[$i]['telefone'] ?></td>
+                                <td><?php echo $nome_cat ?></td>
                                 <td style="text-align: center;">
                                     <a href="index.php?pagina=<?php echo $pag ?>&funcao=editar&id=<?php echo $res[$i]['id'] ?>" title="Editar Registro">
                                         <i class="bi bi-pencil-square text-success"></i>
@@ -94,15 +94,22 @@ require_once('../conexao.php');
 <?php
 if (@$_GET['funcao'] == "editar") {
     $titulo_modal = 'Editar Registro';
-    $query = $pdo->query("SELECT * from usuarios where id = '$_GET[id]'");
+    $query = $pdo->query("SELECT * from fornecedores where id = '$_GET[id]'");
     $res = $query->fetchAll(PDO::FETCH_ASSOC);
     $total_reg = @count($res);
     if ($total_reg > 0) {
         $nome = $res[0]['nome'];
         $email = $res[0]['email'];
-        $cpf = $res[0]['cpf'];
-        $senha = $res[0]['senha'];
-        $nivel = $res[0]['nivel'];
+        $cnpj = $res[0]['cnpj'];
+        $telefone = $res[0]['telefone'];
+        $cep = $res[0]['cep'];
+        $rua = $res[0]['rua'];
+        $numero = $res[0]['numero'];
+        $bairro = $res[0]['bairro'];
+        $cidade = $res[0]['cidade'];
+        $estado = $res[0]['estado'];
+        $id_categoria = $res[0]['categoria'];
+        
     }
 } else {
     $titulo_modal = 'Inserir Registro';
@@ -125,21 +132,21 @@ if (@$_GET['funcao'] == "editar") {
                         <div class="col-4">
                             <div class="mb-3">
                                 <label for="nome" class="form-label">Nome </label>
-                                <input type="text" class="form-control" id="nome" value="<?php echo @$resEd[0]['nome'] ?>" name="nome" placeholder="Nome" autofocus required tabindex="1">
+                                <input type="text" class="form-control" id="nome" value="<?php echo @$nome ?>" name="nome" placeholder="Nome" autofocus required tabindex="1">
                             </div>
                         </div>
 
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="cpf" class="form-label">CPF </label>
-                                <input type="text" class="form-control" id="cpf" value="<?php echo @$resEd[0]['cpf'] ?>" name="cpf" placeholder="CPF" required tabindex="2">
+                                <input type="text" class="form-control" id="cnpj" value="<?php echo @$cnpj ?>" name="cnpj" placeholder="CNPJ" required tabindex="2">
                             </div>
                         </div>
 
                         <div class="col-5">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email </label>
-                                <input type="email" autocomplete="off" class="form-control" id="email" name="email" placeholder="nome@exemplo.com" value="<?php echo @$resEd[0]['email'] ?>" required tabindex="3">
+                                <input type="email" autocomplete="off" class="form-control" id="email" name="email" placeholder="nome@exemplo.com" value="<?php echo @$email ?>" required tabindex="3">
                             </div>
                         </div>
 
@@ -150,21 +157,21 @@ if (@$_GET['funcao'] == "editar") {
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="telefone" class="form-label">Telefone </label>
-                                <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(xx)xxxx-xxxx" value="<?php echo @$resEd[0]['telefone'] ?>" required tabindex="4">
+                                <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(xx)xxxx-xxxx" value="<?php echo @$telefone ?>" required tabindex="4">
                             </div>
                         </div>
 
                         <div class="col-3">
                             <div class="mb-3">
                                 <label for="cep" class="form-label">CEP </label>
-                                <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" value="<?php echo @$resEd[0]['cep'] ?>" tabindex="5">
+                                <input type="text" class="form-control" id="cep" name="cep" placeholder="CEP" value="<?php echo @$cep ?>" tabindex="5">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="rua" class="form-label">Rua </label>
-                                <input type="text" class="form-control" id="rua" name="rua" placeholder="Rua" value="<?php echo @$resEd[0]['rua'] ?>" readonly>
+                                <input type="text" class="form-control" id="rua" name="rua" placeholder="Rua" value="<?php echo @$rua ?>" readonly>
                             </div>
                         </div>
 
@@ -175,21 +182,21 @@ if (@$_GET['funcao'] == "editar") {
                         <div class="col-2">
                             <div class="mb-3">
                                 <label for="numero" class="form-label">Número </label>
-                                <input type="text" class="form-control" id="numero" name="numero" value="<?php echo @$resEd[0]['numero'] ?>" placeholder="Número" tabindex="6">
+                                <input type="text" class="form-control" id="numero" name="numero" value="<?php echo @$numero ?>" placeholder="Número" tabindex="6">
                             </div>
                         </div>
 
                         <div class="col-5">
                             <div class="mb-3">
                                 <label for="bairro" class="form-label">Bairro </label>
-                                <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" value="<?php echo @$resEd[0]['bairro'] ?>" readonly>
+                                <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Bairro" value="<?php echo @$bairro ?>" readonly>
                             </div>
                         </div>
 
                         <div class="col-5">
                             <div class="mb-3">
                                 <label for="cidade" class="form-label">Cidade </label>
-                                <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" value="<?php echo @$resEd[0]['cidade'] ?>" readonly>
+                                <input type="text" class="form-control" id="cidade" name="cidade" placeholder="Cidade" value="<?php echo @$cidade ?>" readonly>
                             </div>
                         </div>
 
@@ -200,38 +207,24 @@ if (@$_GET['funcao'] == "editar") {
                         <div class="col-2">
                             <div class="mb-3">
                                 <label for="estado" class="form-label">Estado </label>
-                                <input type="text" class="form-control" id="estado" name="estado" value="<?php echo @$resEd[0]['estado'] ?>" placeholder="UF" readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-2">
-                            <div class="mb-3">
-                                <label for="senha" class="form-label">Senha </label>
-                                <input type="text" class="form-control" id="senha" name="senha" placeholder="Senha" value="<?php echo @$resEd[0]['senha'] ?>" required tabindex="7">
+                                <input type="text" class="form-control" id="estado" name="estado" value="<?php echo @$estado ?>" placeholder="UF" readonly>
                             </div>
                         </div>
 
                         <div class="col-3">
                             <div class="mb-3">
-                                <label for="datanasc" class="form-label">Data Nascimento </label>
-                                <input type="date" class="form-control" id="datanasc" name="datanasc" placeholder="Nascimento" value="<?php echo @$resEd[0]['datanasc'] ?>" required tabindex="8">
-                            </div>
-                        </div>
-
-                        <div class="col-3">
-                            <div class="mb-3">
-                                <label for="cargo" class="form-label">Cargo </label>
-                                <select class="form-select" aria-label="Default select example" id="cargo" name="cargo" tabindex="9">
+                                <label for="categoria" class="form-label">Categoria </label>
+                                <select class="form-select" aria-label="Default select example" id="categoria" name="categoria" tabindex="9">
                                     <?php
-                                    $query = $pdo->query("SELECT * FROM cargos ORDER BY nome ASC");
-                                    $res = $query->fetchAll(PDO::FETCH_ASSOC);
-                                    for ($i = 0; $i < @count($res); $i++) {
-                                        foreach ($res[$i] as $key => $value) {
+                                    $query_cat = $pdo->query("SELECT * FROM categorias ORDER BY nome ASC");
+                                    $res_cat = $query_cat->fetchAll(PDO::FETCH_ASSOC);
+                                    for ($i = 0; $i < @count($res_cat); $i++) {
+                                        foreach ($res_cat[$i] as $key => $value) {
                                         }
-                                        $id_cargo = $res[$i]['id'];
-                                        $nome_cargo = $res[$i]['nome'];
+                                        $id_cat = $res_cat[$i]['id'];
+                                        $nome_cat = $res_cat[$i]['nome'];
                                     ?>
-                                        <option <?php if (@$id_cargo == @$resEd[0]['cargo']) { ?> selected <?php } ?> value="<?php echo $id_cargo ?>"><?php echo $nome_cargo ?></option>
+                                        <option <?php if (@$id_cat == @$id_categoria) { ?> selected <?php } ?> value="<?php echo $id_cat ?>"><?php echo $nome_cat ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -240,19 +233,7 @@ if (@$_GET['funcao'] == "editar") {
 
                     </div>
 
-                    <div class="form-group">
-                        <label for="imagem">Imagem</label>
-                        <input type="file" value="<?php echo @$resEd[0]['imagem'] ?>" class="form-control-file" id="imagem" name="imagem" onChange="carregarImg();">
-                    </div>
-
-                    <div id="divImgConta" class="mt-4">
-                        <?php if (@$resEd[0]['imagem'] != "") { ?>
-                            <img src="../assets/imagens/fucionarios/<?php echo @$resEd[0]['imagem'] ?>" width="170px" id="target">
-                        <?php  } else { ?>
-                            <img src="../assets/imagens/funcionarios/sem-foto.jpg" width="170px" id="target" alt="Foto Funcionario">
-
-                        <?php } ?>
-                    </div>
+                    <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
 
                     <div style="text-align: center;" id="mensagem">
                     </div>
@@ -287,17 +268,15 @@ if (@$_GET['funcao'] == "editar") {
                 <div class="modal-footer">
                     <button type="button" id="btn-fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button name="btn-excluir" id="btn-excluir" type="submit" class="btn btn-danger">Excluir</button>
-
-                    <input name="id" type="hidden" value="<?php echo @$_GET['id'] ?>">
-
                 </div>
+                <input name="id" type="text" value="<?php echo @$_GET['id'] ?>">
             </form>
         </div>
     </div>
 </div>
-<!-- FIM     MODAL EXCLUSÃO -->
+<!-- FIM MODAL EXCLUSÃO -->
 
-
+<!-- SCRIPT ADICIONAR ARQUIVO -->
 <?php
 if (@$_GET['funcao'] == "novo") { ?>
     <script type="text/javascript">
@@ -308,9 +287,9 @@ if (@$_GET['funcao'] == "novo") { ?>
         myModal.show();
     </script>
 <?php } ?>
+<!-- FIM SCRIPT ADICIONAR ARQUIVO -->
 
-
-
+<!-- SCRIPT EDITAR ARQUIVO -->
 <?php
 if (@$_GET['funcao'] == "editar") { ?>
     <script type="text/javascript">
@@ -321,9 +300,9 @@ if (@$_GET['funcao'] == "editar") { ?>
         myModal.show();
     </script>
 <?php } ?>
+<!-- FIM SCRIPT EDITAR ARQUIVO -->
 
-
-
+<!-- SCRIPT APAGAR ARQUIVO -->
 <?php
 if (@$_GET['funcao'] == "deletar") { ?>
     <script type="text/javascript">
@@ -334,9 +313,7 @@ if (@$_GET['funcao'] == "deletar") { ?>
         myModal.show();
     </script>
 <?php } ?>
-
-
-
+<!-- FIM SCRIPT APAGAR ARQUIVO -->
 
 <!--AJAX PARA INSERÇÃO E EDIÇÃO DOS DADOS COM IMAGEM -->
 <script type="text/javascript">
@@ -356,11 +333,8 @@ if (@$_GET['funcao'] == "deletar") { ?>
 
                 if (mensagem.trim() == "Salvo com Sucesso!") {
 
-                    //$('#nome').val('');
-                    $('#nome').focus();
-                    //$('#cpf').val('');
                     $('#btn-fechar').click();
-                    //window.location = "index.php?pagina=" + pag;
+                    window.location = "index.php?pagina=" + pag;
 
                 } else {
 
@@ -432,7 +406,7 @@ if (@$_GET['funcao'] == "deletar") { ?>
 <!-- SCRIPT PARA DATABLES USUARIOS -->
 <script>
     $(document).ready(function() {
-        var table = $('#usuarios').DataTable({
+        var table = $('#fornecedores').DataTable({
             ordering: false
         });
 
